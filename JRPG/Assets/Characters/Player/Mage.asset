@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Mage
   m_EditorClassIdentifier: 
   CharacterName: Megumin
-  sprite: {fileID: 0}
+  sprite: {fileID: -188485902, guid: 553cbc83be253174da0d64ddc43819f1, type: 3}
   Attack: 25
   Defense: 10
   HP: 15
   MaxHP: 15
-  Mana: 30
+  Mana: 15
   MaxMana: 30
   Intellect: 15
   Speed: 15
