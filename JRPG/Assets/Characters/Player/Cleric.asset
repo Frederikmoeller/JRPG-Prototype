@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cleric
   m_EditorClassIdentifier: 
   CharacterName: Alice
-  sprite: {fileID: 0}
+  sprite: {fileID: 146884864, guid: 553cbc83be253174da0d64ddc43819f1, type: 3}
   Attack: 5
   Defense: 5
   HP: 15
@@ -24,3 +24,6 @@ MonoBehaviour:
   Speed: 10
   CritChance: 50
   CritDamage: 50
+  CharGO: {fileID: 630878672702181251, guid: 76c6f5ffcc1e87b43b5ede7abe9a3f5d, type: 3}
+  spawnPoints:
+  - {x: 0, y: 0}

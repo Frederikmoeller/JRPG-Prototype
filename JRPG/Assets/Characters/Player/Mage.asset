@@ -24,3 +24,6 @@ MonoBehaviour:
   Speed: 15
   CritChance: 50
   CritDamage: 50
+  CharGO: {fileID: 6309893556901696514, guid: cabc949d38483384e8568aafbc824c8d, type: 3}
+  spawnPoints:
+  - {x: 1, y: 1}

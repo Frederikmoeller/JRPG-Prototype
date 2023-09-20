@@ -16,4 +16,5 @@ public class EnemyStats : ScriptableObject
     public int Speed;
     public int CritChance;
     public int CritDamage;
+    public GameObject charGO;
 }

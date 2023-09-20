@@ -16,7 +16,7 @@ MonoBehaviour:
   sprite: {fileID: -188485902, guid: 553cbc83be253174da0d64ddc43819f1, type: 3}
   Attack: 15
   Defense: 15
-  HP: 10
+  HP: 20
   MaxHP: 20
   Mana: 1
   MaxMana: 1
@@ -24,3 +24,6 @@ MonoBehaviour:
   Speed: 12
   CritChance: 50
   CritDamage: 50
+  CharGO: {fileID: 6550427351200156951, guid: 4f9c02ea3765c6249b1afb16b782bbed, type: 3}
+  spawnPoints:
+  - {x: -1, y: -1}

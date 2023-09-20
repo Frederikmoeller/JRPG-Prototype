@@ -7,12 +7,6 @@ public class PlayerStats : ScriptableObject
 {
     public string CharacterName;
     public Sprite sprite;
-    public enum Class
-    {
-        Warrior,
-        Cleric,
-        Mage
-    }
 
     public int Attack;
     public int Defense;
@@ -24,4 +18,7 @@ public class PlayerStats : ScriptableObject
     public int Speed;
     public int CritChance;
     public int CritDamage;
+    public GameObject CharGO;
+    public Vector2[] spawnPoints;
+
 }
