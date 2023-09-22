@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     {
         _spriteRenderer.sprite = playerSetup.sprite;
         nameText.text = playerSetup.CharacterName; 
-        HP.text = playerSetup.HP.ToString() + "/" + playerSetup.MaxHP.ToString();
+        HP.text = playerSetup.HP + "/" + playerSetup.MaxHP;
         Mana.text = playerSetup.Mana + "/" + playerSetup.MaxMana;
     }
 }

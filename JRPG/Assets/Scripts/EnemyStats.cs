@@ -7,7 +7,7 @@ public class EnemyStats : ScriptableObject
 {
     public string enemyName;
     public Sprite enemySprite;
-
+    public bool isEnemy = true;
     public int Attack;
     public int Defense;
     public int HP;
@@ -17,4 +17,5 @@ public class EnemyStats : ScriptableObject
     public int CritChance;
     public int CritDamage;
     public GameObject charGO;
+    public Vector2 position;
 }

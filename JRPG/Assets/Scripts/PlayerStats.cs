@@ -7,7 +7,7 @@ public class PlayerStats : ScriptableObject
 {
     public string CharacterName;
     public Sprite sprite;
-
+    public bool isEnemy;
     public int Attack;
     public int Defense;
     public int HP;

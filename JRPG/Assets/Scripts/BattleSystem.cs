@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
@@ -22,8 +23,12 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private bool currentActor;
     public List<GameObject> turnOrder = new();
     public List<GameObject> charactersToSpawn;
+    public List<GameObject> enemiesToSpawn;
     private int _instanceNumber;
     [SerializeField] private Transform _canvas;
+    [SerializeField] private GameObject character;
+    [SerializeField] private GameObject characterUI;
+    [SerializeField] private Vector2 UIPos;
 
     // Start is called before the first frame update
     void Start()
@@ -67,34 +72,44 @@ public class BattleSystem : MonoBehaviour
     {
         for (int i = 0; i < charactersToSpawn.Count; i++)
         {
-            GameObject character = Instantiate(charactersToSpawn[i], charactersToSpawn[i].GetComponent<Player>().playerSetup.spawnPoints[0],
+            character = Instantiate(charactersToSpawn[i], charactersToSpawn[i].GetComponent<Player>().playerSetup.spawnPoints[0],
                 quaternion.identity);
 
             character.name = charactersToSpawn[i].GetComponent<Player>().playerSetup.CharacterName;
             
-            GameObject characterUI = Instantiate(charactersToSpawn[i].GetComponent<Player>().UI,
+            characterUI = Instantiate(charactersToSpawn[i].GetComponent<Player>().UI,
                 charactersToSpawn[i].GetComponent<Player>().UI.transform.position, quaternion.identity);
             
             characterUI.name = charactersToSpawn[i].GetComponent<Player>().playerSetup.CharacterName + "UI";
 
             characterUI.transform.SetParent(_canvas, false);
 
-            var position = characterUI.transform.position;
+            UIPos = characterUI.transform.position;
             
-            position = new Vector3(position.x, position.y - (100*i));
-            characterUI.transform.position = position;
+            UIPos = new Vector2(UIPos.x, UIPos.y - (150*i));
+            characterUI.transform.position = UIPos;
 
             character.GetComponent<Player>().nameText = characterUI.GetComponentInChildren<TextMeshProUGUI>();
 
             character.GetComponent<Player>().HP = characterUI.transform.GetChild(2).Find("HPLeft").GetComponent<TextMeshProUGUI>();
 
             character.GetComponent<Player>().Mana = characterUI.transform.GetChild(3).Find("Mana").GetComponent<TextMeshProUGUI>();
+
+            characterUI.transform.Find("HealthBar").GetComponent<BarScript>().playerStats = character.GetComponent<Player>().playerSetup;
+
+            characterUI.transform.Find("ManaBar").GetComponent<BarScript>().playerStats = character.GetComponent<Player>().playerSetup;
             
-            //print(characterUI.GetComponent<Player>().UI.GetComponent<BarScript>().playerStats);
-
-            character.GetComponent<Player>().UI.transform.Find("HealthBar").GetComponent<BarScript>().playerStats = character.GetComponent<Player>().playerSetup;
-
-            character.GetComponent<Player>().UI.transform.Find("ManaBar").GetComponent<BarScript>().playerStats = character.GetComponent<Player>().playerSetup;
+            turnOrder.Add(character);
         }
+
+        for (int i = 0; i < enemiesToSpawn.Count; i++)
+        {
+            character = Instantiate(enemiesToSpawn[i], enemiesToSpawn[i].GetComponent<EnemyBehaviour>().enemySetup.position,
+                quaternion.identity);
+
+            character.name = enemiesToSpawn[i].GetComponent<EnemyBehaviour>().enemySetup.enemyName;
+            turnOrder.Add(character);
+        }
+
     }
 }

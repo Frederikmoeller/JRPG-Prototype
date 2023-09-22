@@ -7,6 +7,8 @@ public class EnemyBehaviour : MonoBehaviour
     public EnemyStats enemySetup;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Sprite _newSprite;
+
+    public GameObject enemyGO;
     // Start is called before the first frame update
     void Start()
     {
