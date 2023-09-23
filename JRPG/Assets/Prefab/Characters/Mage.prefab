@@ -458,6 +458,7 @@ GameObject:
   - component: {fileID: 6807003610194722481}
   - component: {fileID: 4135212289043673659}
   - component: {fileID: 7899359575773203674}
+  - component: {fileID: 2495518149717044334}
   m_Layer: 0
   m_Name: Mage
   m_TagString: Player
@@ -545,12 +546,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5acbadbbaccfdeb4bab52c979083ce53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSetup: {fileID: 11400000, guid: bd6ba88c13fa2334dbb89fb525131712, type: 2}
-  nameText: {fileID: 0}
-  HP: {fileID: 0}
-  Mana: {fileID: 0}
+  baseSetup:
+    name: Megumin
+    sprite: {fileID: -188485902, guid: 553cbc83be253174da0d64ddc43819f1, type: 3}
+    isEnemy: 0
+    Attack: 15
+    Defense: 10
+    HP: 13
+    MaxHP: 13
+    Intellect: 19
+    Speed: 20
+    CritChance: 60
+    CritDamage: 70
+    charGO: {fileID: 6309893556901696514}
+    position: {x: 0, y: 0}
+    level: 0
+  playerSetup:
+    maxMana: 15
+    mana: 15
+    expNeeded: 0
+    currentExp: 0
+  enemySetup:
+    expDrop: 0
   _spriteRenderer: {fileID: 4135212289043673659}
+--- !u!114 &2495518149717044334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6309893556901696514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d25308b7f7739446ab374661232ad3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 0}
+  HPText: {fileID: 0}
+  ManaText: {fileID: 0}
   UI: {fileID: 8969007534312748532, guid: 0a9bc5ba84b9d5e4b8ce15681f6ea1ca, type: 3}
+  unit: {fileID: 0}
 --- !u!1 &6980900500600114174
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7988222764047507664}
   - component: {fileID: 2522124578236437857}
   - component: {fileID: 4942175662396922599}
+  - component: {fileID: -720168310657249240}
   m_Layer: 0
   m_Name: Cleric
   m_TagString: Player
@@ -98,11 +99,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5acbadbbaccfdeb4bab52c979083ce53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSetup: {fileID: 11400000, guid: 111b68eea5e6fe44a83833535b7ad4cd, type: 2}
-  nameText: {fileID: 0}
-  HP: {fileID: 0}
-  Mana: {fileID: 0}
+  baseSetup:
+    name: Alice
+    sprite: {fileID: -188485902, guid: 553cbc83be253174da0d64ddc43819f1, type: 3}
+    isEnemy: 0
+    Attack: 15
+    Defense: 15
+    HP: 20
+    MaxHP: 20
+    Intellect: 5
+    Speed: 12
+    CritChance: 50
+    CritDamage: 50
+    charGO: {fileID: 630878672702181251}
+    position: {x: 1, y: 1}
+    level: 1
+  playerSetup:
+    maxMana: 15
+    mana: 15
+    expNeeded: 0
+    currentExp: 0
+  enemySetup:
+    expDrop: 0
   _spriteRenderer: {fileID: 2522124578236437857}
+--- !u!114 &-720168310657249240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630878672702181251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d25308b7f7739446ab374661232ad3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 0}
+  HPText: {fileID: 0}
+  ManaText: {fileID: 0}
   UI: {fileID: 8969007534312748532, guid: 0a9bc5ba84b9d5e4b8ce15681f6ea1ca, type: 3}
 --- !u!1 &646214092033022370
 GameObject:

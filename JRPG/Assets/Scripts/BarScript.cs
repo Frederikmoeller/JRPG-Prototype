@@ -4,21 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 public class BarScript : MonoBehaviour
 {
-    public Slider healthBar;
-    public PlayerStats playerStats;
+    public Slider Bar;
+    public Unit playerStats;
     private void Start()
     {
         if (gameObject.name.Contains("Health"))
         {
-            healthBar = GetComponent<Slider>();
-            healthBar.maxValue = playerStats.MaxHP;
-            healthBar.value = playerStats.HP; 
+            Bar = GetComponent<Slider>();
+            Bar.maxValue = playerStats.baseSetup.MaxHP;
+            Bar.value = playerStats.baseSetup.HP; 
         }
         else if (gameObject.name.Contains("Mana"))
         {
-            healthBar = GetComponent<Slider>();
-            healthBar.maxValue = playerStats.MaxMana;
-            healthBar.value = playerStats.Mana; 
+            Bar = GetComponent<Slider>();
+            Bar.maxValue = playerStats.playerSetup.maxMana;
+            Bar.value = playerStats.playerSetup.mana; 
         }
 
     }

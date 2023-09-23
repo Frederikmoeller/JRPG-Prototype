@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1558781634722727802}
   - component: {fileID: 2029569705856104796}
-  - component: {fileID: 5988169348879759861}
+  - component: {fileID: -2873660944641098500}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Enemy
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5988169348879759861
+--- !u!114 &-2873660944641098500
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,10 +94,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 3212904132327545670}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07b365f21d9767f46a9875d696406331, type: 3}
+  m_Script: {fileID: 11500000, guid: 5acbadbbaccfdeb4bab52c979083ce53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySetup: {fileID: 11400000, guid: 5fb90c2480abe5f4d9724c2bda365029, type: 2}
+  baseSetup:
+    name: Slime
+    sprite: {fileID: 146884864, guid: 553cbc83be253174da0d64ddc43819f1, type: 3}
+    isEnemy: 1
+    Attack: 1
+    Defense: 1
+    HP: 1
+    MaxHP: 1
+    Intellect: 1
+    Speed: 1
+    CritChance: 1
+    CritDamage: 1
+    charGO: {fileID: 3212904132327545670}
+    position: {x: -5, y: 0}
+    level: 1
+  playerSetup:
+    maxMana: 0
+    mana: 0
+    expNeeded: 0
+    currentExp: 0
+  enemySetup:
+    expDrop: 5
   _spriteRenderer: {fileID: 2029569705856104796}
-  _newSprite: {fileID: 146884864, guid: 553cbc83be253174da0d64ddc43819f1, type: 3}
-  enemyGO: {fileID: 3212904132327545670}

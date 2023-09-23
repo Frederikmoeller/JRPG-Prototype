@@ -458,6 +458,7 @@ GameObject:
   - component: {fileID: 2161869175765697959}
   - component: {fileID: 6704892772844080812}
   - component: {fileID: 8034505876820109651}
+  - component: {fileID: 8113081545922806477}
   m_Layer: 0
   m_Name: Warrior
   m_TagString: Player
@@ -550,11 +551,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5acbadbbaccfdeb4bab52c979083ce53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSetup: {fileID: 11400000, guid: 608a6b58db82a614fb5cc1455c5196df, type: 2}
-  nameText: {fileID: 0}
-  HP: {fileID: 0}
-  Mana: {fileID: 0}
+  baseSetup:
+    name: Kazuma
+    sprite: {fileID: 146884864, guid: 553cbc83be253174da0d64ddc43819f1, type: 3}
+    isEnemy: 0
+    Attack: 15
+    Defense: 15
+    HP: 15
+    MaxHP: 15
+    Intellect: 15
+    Speed: 15
+    CritChance: 5
+    CritDamage: 15
+    charGO: {fileID: 6550427351200156951}
+    position: {x: -1, y: -1}
+    level: 1
+  playerSetup:
+    maxMana: 1
+    mana: 1
+    expNeeded: 0
+    currentExp: 0
+  enemySetup:
+    expDrop: 0
   _spriteRenderer: {fileID: 6704892772844080812}
+--- !u!114 &8113081545922806477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6550427351200156951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d25308b7f7739446ab374661232ad3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 0}
+  HPText: {fileID: 0}
+  ManaText: {fileID: 0}
   UI: {fileID: 8969007534312748532, guid: 0a9bc5ba84b9d5e4b8ce15681f6ea1ca, type: 3}
 --- !u!1 &7736445818749424390
 GameObject:
