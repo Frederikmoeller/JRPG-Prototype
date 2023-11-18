@@ -6,13 +6,15 @@ using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class BattleSystem : MonoBehaviour
 {
     public enum BattleState
     {
         Start,
-        Combat,
+        PlayerTurn,
+        Enemyturn,
         Lost,
         Won,
         Escape,
@@ -20,13 +22,11 @@ public class BattleSystem : MonoBehaviour
 
     public BattleState state;
     public List<GameObject> turnOrder = new();
-    public List<GameObject> charactersToSpawn;
-    public List<GameObject> enemiesToSpawn;
-    private int _instanceNumber;
-    private Transform _canvas;
-    private GameObject character;
-    private GameObject characterUI;
+    public List<GameObject> charactersToSpawn, enemiesToSpawn;
+    [SerializeField] private Transform _canvas;
+    private GameObject enemy, character, characterUI;
     private Vector2 UIPos;
+    private int turnIndex, enemiesDead, _instanceNumber;
 
     // Start is called before the first frame update
     void Start()
@@ -38,30 +38,56 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator SetupBattle()
     {
-        state = BattleState.Combat;
+        turnIndex = 0;
         yield return new WaitForSeconds(2f);
         Turn();
     }
 
     void Turn()
     {
+        print(turnOrder[turnIndex]);
+        if (turnOrder[turnIndex].GetComponent<Unit>().baseSetup.isEnemy)
+        {
+            print("Enemy Attack!");
+            state = BattleState.Enemyturn;
+            var element = charactersToSpawn[Random.Range(0, charactersToSpawn.Count)];
+            DamageCalculation(turnOrder[turnIndex], element);
+            turnIndex++;
+        }
+        else
+        {
+            state = BattleState.PlayerTurn;
+            PlayerTurn(turnOrder[turnIndex]);
+            turnIndex++;
+        }        
+        if (turnIndex > turnOrder.Count - 1)
+        {
+            turnIndex = 0;
+        }
+    }
+
+    private GameObject ChooseEnemy()
+    {
+        GameObject chosenEnemy = GameObject.Find("Slime");
         
+        return chosenEnemy;
     }
 
-    IEnumerator PlayerAttack()
+    public IEnumerator PlayerAttack()
     {
-        print("wait for...");
-        // Damage the enemy
+        DamageCalculation(turnOrder[turnIndex], ChooseEnemy());
+        
         yield return new WaitForSeconds(2f);
-        print("it!");
-        // Check if enemy is dead
+        if (ChooseEnemy().GetComponent<Unit>().baseSetup.HP <= 0)
+        {
+            enemiesDead++;
+        }
+        
+        if (enemiesDead >= enemiesToSpawn.Count)
+        {
+            state = BattleState.Won;
+        }
         // Change state based on what happened
-    }
-
-    public void OnAttackButton()
-    {
-
-        StartCoroutine(PlayerAttack());
     }
 
     void SpawnCharacters()
@@ -100,11 +126,11 @@ public class BattleSystem : MonoBehaviour
 
         for (int i = 0; i < enemiesToSpawn.Count; i++)
         {
-            character = Instantiate(enemiesToSpawn[i], enemiesToSpawn[i].GetComponent<Unit>().baseSetup.position,
+            enemy = Instantiate(enemiesToSpawn[i], enemiesToSpawn[i].GetComponent<Unit>().baseSetup.position,
                 quaternion.identity);
 
-            character.name = enemiesToSpawn[i].GetComponent<Unit>().baseSetup.name;
-            turnOrder.Add(character);
+            enemy.name = enemiesToSpawn[i].GetComponent<Unit>().baseSetup.name;
+            turnOrder.Add(enemy);
         }
 
     }
@@ -122,7 +148,22 @@ public class BattleSystem : MonoBehaviour
         {
             return 1;
         }
-        
         return 0;
+    }
+
+    private void DamageCalculation(GameObject attacker, GameObject victim)
+    {
+        int damage = attacker.GetComponent<Unit>().baseSetup.Attack / victim.GetComponent<Unit>().baseSetup.Defense;
+        victim.GetComponent<Unit>().baseSetup.HP -= damage;
+    }
+
+    private void PlayerTurn(GameObject selectedCharacter)
+    {
+        selectedCharacter.transform.position = Vector3.Lerp(selectedCharacter.transform.position, new Vector3(1f, 0f), 10f);
+        var UIposition = GameObject.Find(selectedCharacter.name + "UI").transform.position;
+        UIposition = new Vector3(UIposition.x - 120f, UIposition.y);
+        GameObject.Find(selectedCharacter.name + "UI").transform.position = UIposition;
+        selectedCharacter.transform.GetChild(0).gameObject.SetActive(true);
+        
     }
 }

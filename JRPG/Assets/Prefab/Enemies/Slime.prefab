@@ -103,10 +103,10 @@ MonoBehaviour:
     isEnemy: 1
     Attack: 1
     Defense: 1
-    HP: 1
-    MaxHP: 1
+    HP: 10000
+    MaxHP: 10000
     Intellect: 1
-    Speed: 1
+    Speed: 17
     CritChance: 1
     CritDamage: 1
     charGO: {fileID: 3212904132327545670}

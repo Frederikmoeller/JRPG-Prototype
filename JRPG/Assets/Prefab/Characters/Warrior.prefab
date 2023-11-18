@@ -459,6 +459,7 @@ GameObject:
   - component: {fileID: 6704892772844080812}
   - component: {fileID: 8034505876820109651}
   - component: {fileID: 8113081545922806477}
+  - component: {fileID: 5272056781578665078}
   m_Layer: 0
   m_Name: Warrior
   m_TagString: Player
@@ -480,7 +481,7 @@ RectTransform:
   m_Children:
   - {fileID: 451632580740555218}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -528,7 +529,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 146884864, guid: 553cbc83be253174da0d64ddc43819f1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -536,7 +537,7 @@ SpriteRenderer:
   m_Size: {x: 0.32, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &8034505876820109651
@@ -590,6 +591,20 @@ MonoBehaviour:
   HPText: {fileID: 0}
   ManaText: {fileID: 0}
   UI: {fileID: 8969007534312748532, guid: 0a9bc5ba84b9d5e4b8ce15681f6ea1ca, type: 3}
+  unit: {fileID: 0}
+--- !u!114 &5272056781578665078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6550427351200156951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfe7e3721d250b54f9814237f6ee3d4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _battleSystem: {fileID: 0}
 --- !u!1 &7736445818749424390
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,8 +727,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BattleSystem, Assembly-CSharp
+      - m_Target: {fileID: 5272056781578665078}
+        m_TargetAssemblyTypeName: AttackButton, Assembly-CSharp
         m_MethodName: OnAttackButton
         m_Mode: 1
         m_Arguments:
