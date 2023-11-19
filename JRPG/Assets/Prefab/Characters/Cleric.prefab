@@ -113,7 +113,7 @@ MonoBehaviour:
     CritChance: 50
     CritDamage: 50
     charGO: {fileID: 630878672702181251}
-    position: {x: 1, y: 1}
+    position: {x: 4, y: 2.5}
     level: 1
   playerSetup:
     maxMana: 15

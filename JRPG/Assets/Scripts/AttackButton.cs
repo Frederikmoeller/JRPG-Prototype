@@ -9,11 +9,13 @@ public class AttackButton : MonoBehaviour
 
     private void Awake()
     {
+        print("Awake");
         _battleSystem = GameObject.Find("Battlesystem").GetComponent<BattleSystem>();
     }
 
     public void OnAttackButton()
     {
+        print("Attack!");
         StartCoroutine(_battleSystem.PlayerAttack());
     }
 }

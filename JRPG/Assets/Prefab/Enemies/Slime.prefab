@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2029569705856104796
 SpriteRenderer:
@@ -101,9 +101,9 @@ MonoBehaviour:
     name: Slime
     sprite: {fileID: 146884864, guid: 553cbc83be253174da0d64ddc43819f1, type: 3}
     isEnemy: 1
-    Attack: 1
+    Attack: 12
     Defense: 1
-    HP: 10000
+    HP: 15
     MaxHP: 10000
     Intellect: 1
     Speed: 17
