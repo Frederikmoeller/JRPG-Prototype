@@ -12,6 +12,7 @@ public class Unit : MonoBehaviour
     public PlayerUnit playerSetup;
     public EnemyUnit enemySetup;
     public SpriteRenderer _spriteRenderer;
+    public Weapon weapon;
 
 
     // Start is called before the first frame update

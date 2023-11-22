@@ -7,6 +7,7 @@ public class BaseUnit
     public string name;
     public Sprite sprite;
     public bool isEnemy = true;
+    public bool isDead;
     public int Attack;
     public int Defense;
     public int HP;
@@ -33,4 +34,11 @@ public class EnemyUnit
 {
     public int expDrop;
     //public List<Items> ItemDrop;
+}
+[System.Serializable]
+public class Weapon
+{
+    public string name;
+    public int strength;
+    public int magicStrength;
 }

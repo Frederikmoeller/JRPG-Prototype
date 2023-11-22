@@ -227,13 +227,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 5272056781578665078}
+        m_TargetAssemblyTypeName: AttackButton, Assembly-CSharp
+        m_MethodName: OnFleeButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -556,6 +556,7 @@ MonoBehaviour:
     name: Kazuma
     sprite: {fileID: 146884864, guid: 553cbc83be253174da0d64ddc43819f1, type: 3}
     isEnemy: 0
+    isDead: 0
     Attack: 15
     Defense: 15
     HP: 15
@@ -575,6 +576,10 @@ MonoBehaviour:
   enemySetup:
     expDrop: 0
   _spriteRenderer: {fileID: 6704892772844080812}
+  weapon:
+    name: Sword
+    strength: 20
+    magicStrength: 1
 --- !u!114 &8113081545922806477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -582,7 +587,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6550427351200156951}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d25308b7f7739446ab374661232ad3e, type: 3}
   m_Name: 

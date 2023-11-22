@@ -103,7 +103,7 @@ MonoBehaviour:
     isEnemy: 1
     Attack: 12
     Defense: 1
-    HP: 15
+    HP: 10000
     MaxHP: 10000
     Intellect: 1
     Speed: 17
@@ -120,3 +120,7 @@ MonoBehaviour:
   enemySetup:
     expDrop: 5
   _spriteRenderer: {fileID: 2029569705856104796}
+  weapon:
+    name: Sludge
+    strength: 15
+    magicStrength: 10

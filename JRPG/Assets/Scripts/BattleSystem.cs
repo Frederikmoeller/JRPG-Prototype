@@ -27,7 +27,8 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private Transform _canvas;
     private GameObject enemy, character, characterUI;
     private Vector2 UIPos;
-    private int turnIndex, enemiesDead, _instanceNumber;
+    private int charactersDead, enemiesDead, _instanceNumber;
+    public int turnIndex;
 
     // Start is called before the first frame update
     void Start()
@@ -40,28 +41,33 @@ public class BattleSystem : MonoBehaviour
     IEnumerator SetupBattle()
     {
         turnIndex = 0;
+        charactersDead = 0;
+        enemiesDead = 0;
         yield return new WaitForSeconds(2f);
         Turn();
     }
 
-    void Turn()
+    public void Turn()
     {
-        print(turnIndex);
         if (turnIndex > turnOrder.Count - 1)
         {
             turnIndex = 0;
         }
-        if (turnOrder[turnIndex].GetComponent<Unit>().baseSetup.isEnemy)
+        
+        if (turnOrder[turnIndex].GetComponent<Unit>().baseSetup.isEnemy && turnOrder[turnIndex].GetComponent<Unit>().baseSetup.isDead == false)
         {
-            print("Enemy Attack!");
             StartCoroutine(EnemyTurn());
-
         }
-        else
+        else if (turnOrder[turnIndex].GetComponent<Unit>().baseSetup.isEnemy == false && turnOrder[turnIndex].GetComponent<Unit>().baseSetup.isDead == false)
         {
             state = BattleState.PlayerTurn;
             PlayerTurn(turnOrder[turnIndex]);
-        }        
+        }
+        else
+        {
+            turnIndex++;
+            Turn();
+        }
 
     }
 
@@ -72,34 +78,21 @@ public class BattleSystem : MonoBehaviour
         return chosenEnemy;
     }
 
-    public IEnumerator PlayerAttack()
+    public void PlayerAttack()
     {
         DamageCalculation(turnOrder[turnIndex], ChooseEnemy());
-        
-        if (ChooseEnemy().GetComponent<Unit>().baseSetup.HP <= 0)
-        {
-            enemiesDead++;
-            ChooseEnemy().SetActive(false);
-        }
-        
-        if (enemiesDead >= enemiesToSpawn.Count)
-        {
-            state = BattleState.Won;
-            yield return new WaitForSeconds(3f);
-            SceneManager.LoadScene("Overworld");
-        }
-        else
-        {
-            turnOrder[turnIndex].transform.GetChild(0).gameObject.SetActive(false);
-            yield return new WaitForSeconds(2f);
-            var UIPos = GameObject.Find(turnOrder[turnIndex].name + "UI").transform.position;
-            UIPos = new Vector3(UIPos.x + 120f, UIPos.y);
-            GameObject.Find(turnOrder[turnIndex].name + "UI").transform.position = UIPos;
-            StartCoroutine(MoveCharacterBack(turnOrder[turnIndex]));
-            turnIndex++;
-            Turn();
-        }
-        // Change state based on what happened
+    }
+
+    public IEnumerator EndOfTurn()
+    {
+        turnOrder[turnIndex].transform.GetChild(0).gameObject.SetActive(false);
+        yield return new WaitForSeconds(2f);
+        var UIPos = GameObject.Find(turnOrder[turnIndex].name + "UI").transform.position;
+        UIPos = new Vector3(UIPos.x + 120f, UIPos.y);
+        GameObject.Find(turnOrder[turnIndex].name + "UI").transform.position = UIPos;
+        StartCoroutine(MoveCharacterBack(turnOrder[turnIndex]));
+        turnIndex++;
+        Turn();
     }
 
     void SpawnCharacters()
@@ -123,11 +116,13 @@ public class BattleSystem : MonoBehaviour
             UIPos = new Vector2(UIPos.x, UIPos.y - (150*i));
             characterUI.transform.position = UIPos;
 
-            character.GetComponent<UnitUI>().nameText = characterUI.GetComponentInChildren<TextMeshProUGUI>();
+            characterUI.GetComponent<UnitUI>().unit = character.GetComponent<Unit>();
 
-            character.GetComponent<UnitUI>().HPText = characterUI.transform.Find("HealthBar").Find("HPLeft").GetComponent<TextMeshProUGUI>();
+            characterUI.GetComponent<UnitUI>().nameText = characterUI.GetComponentInChildren<TextMeshProUGUI>();
 
-            character.GetComponent<UnitUI>().ManaText = characterUI.transform.Find("ManaBar").Find("Mana").GetComponent<TextMeshProUGUI>();
+            characterUI.GetComponent<UnitUI>().HPText = characterUI.transform.Find("HealthBar").Find("HPLeft").GetComponent<TextMeshProUGUI>();
+
+            characterUI.GetComponent<UnitUI>().ManaText = characterUI.transform.Find("ManaBar").Find("Mana").GetComponent<TextMeshProUGUI>();
 
             characterUI.transform.Find("HealthBar").GetComponent<BarScript>().playerStats = character.GetComponent<Unit>();
 
@@ -165,10 +160,45 @@ public class BattleSystem : MonoBehaviour
 
     private void DamageCalculation(GameObject attacker, GameObject victim)
     {
-        print(attacker);
-        print(victim);
-        int damage = attacker.GetComponent<Unit>().baseSetup.Attack / victim.GetComponent<Unit>().baseSetup.Defense;
+        print("Attacker is " + attacker + " and victim is " + victim);
+        int damage = attacker.GetComponent<Unit>().baseSetup.Attack * attacker.GetComponent<Unit>().weapon.strength / victim.GetComponent<Unit>().baseSetup.Defense;
+        damage = Mathf.FloorToInt(damage * Random.Range(0.90f, 1.10f));
+        print(damage);
         victim.GetComponent<Unit>().baseSetup.HP -= damage;
+        if (victim.GetComponent<Unit>().baseSetup.HP < 0)
+        {
+            victim.GetComponent<Unit>().baseSetup.HP = 0;
+        }
+        
+        if (victim.GetComponent<Unit>().baseSetup.HP <= 0 && victim.GetComponent<Unit>().baseSetup.isEnemy)
+        {
+            victim.GetComponent<Unit>().baseSetup.isDead = true;
+            enemiesDead++;
+            victim.SetActive(false);
+        }
+        else if (victim.GetComponent<Unit>().baseSetup.HP <= 0 && victim.GetComponent<Unit>().baseSetup.isEnemy == false)
+        {
+            victim.GetComponent<Unit>().baseSetup.isDead = true;
+            charactersDead++;
+            victim.SetActive(false);
+        }
+        
+        if (enemiesDead >= enemiesToSpawn.Count)
+        {
+            state = BattleState.Won;
+            WaitFunction(3f);
+            SceneManager.LoadScene("Overworld");
+        }
+        else if (charactersDead >= charactersToSpawn.Count)
+        {
+            state = BattleState.Lost;
+            WaitFunction(3f);
+            SceneManager.LoadScene("Overworld");
+        }
+        else
+        {
+            StartCoroutine(EndOfTurn());
+        }
     }
 
     private float lerpTime = 0.1f; // Adjust the time as needed
@@ -229,7 +259,7 @@ public class BattleSystem : MonoBehaviour
         state = BattleState.Enemyturn;
         var element = turnOrder[Random.Range(0, turnOrder.Count - 1)];
         yield return new WaitForSeconds(2f);
-        if (element.GetComponent<Unit>().baseSetup.isEnemy == false)
+        if (element.GetComponent<Unit>().baseSetup.isEnemy == false && element.GetComponent<Unit>().baseSetup.isDead == false)
         {
             DamageCalculation(turnOrder[turnIndex], element);
             turnIndex++;
@@ -241,4 +271,26 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    public int SpeedDifferenceCalculation()
+    {
+        int enemySpeed = 0;
+
+        GameObject enemyChosen = turnOrder[Random.Range(0, turnOrder.Count - 1)];
+        if (enemyChosen.GetComponent<Unit>().baseSetup.isEnemy)
+        {
+            enemySpeed = enemyChosen.GetComponent<Unit>().baseSetup.Speed;
+        }
+        else
+        {
+            SpeedDifferenceCalculation();
+        }
+        
+        int speedDifference = turnOrder[turnIndex].GetComponent<Unit>().baseSetup.Speed - enemySpeed;
+        return speedDifference;
+    }
+
+    public IEnumerator WaitFunction(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+    }
 }

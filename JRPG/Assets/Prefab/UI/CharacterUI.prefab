@@ -276,7 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db90d6591eae35742bfc8e681bcd990e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 5434872115108567193}
+  Bar: {fileID: 0}
   playerStats: {fileID: 0}
 --- !u!1 &746334500872857932
 GameObject:
@@ -1187,7 +1187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db90d6591eae35742bfc8e681bcd990e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 5129959742437027590}
+  Bar: {fileID: 0}
   playerStats: {fileID: 0}
 --- !u!1 &8969007534312748532
 GameObject:
@@ -1198,6 +1198,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5027344234334209724}
+  - component: {fileID: 657645802182397065}
   m_Layer: 5
   m_Name: CharacterUI
   m_TagString: Untagged
@@ -1229,3 +1230,20 @@ RectTransform:
   m_AnchoredPosition: {x: 560, y: 450}
   m_SizeDelta: {x: 180, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &657645802182397065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8969007534312748532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d25308b7f7739446ab374661232ad3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 5127794235677025032}
+  HPText: {fileID: 6785556721056169614}
+  ManaText: {fileID: 8995981708908321394}
+  UI: {fileID: 8969007534312748532}
+  unit: {fileID: 0}
