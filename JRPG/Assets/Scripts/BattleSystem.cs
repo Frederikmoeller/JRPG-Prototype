@@ -257,17 +257,17 @@ public class BattleSystem : MonoBehaviour
     private IEnumerator EnemyTurn()
     {
         state = BattleState.Enemyturn;
-        var element = turnOrder[Random.Range(0, turnOrder.Count - 1)];
-        yield return new WaitForSeconds(2f);
+        var element = turnOrder[Random.Range(0, turnOrder.Count)];
         if (element.GetComponent<Unit>().baseSetup.isEnemy == false && element.GetComponent<Unit>().baseSetup.isDead == false)
         {
             DamageCalculation(turnOrder[turnIndex], element);
             turnIndex++;
             Turn();
+            yield return new WaitForSeconds(2f);
         }
         else
         {
-            Turn();
+            StartCoroutine(EnemyTurn());
         }
     }
 
