@@ -29,10 +29,13 @@ public class BattleSystem : MonoBehaviour
     private Vector2 UIPos;
     private int charactersDead, enemiesDead, _instanceNumber;
     public int turnIndex;
+    public GameObject hitParticle;
+    private Animator _characterAnimator;
 
     // Start is called before the first frame update
     void Start()
     {
+        _characterAnimator = GetComponent<Animator>();
         SpawnCharacters();
         turnOrder.Sort(CompareSpeed);
         StartCoroutine(SetupBattle());
@@ -164,6 +167,7 @@ public class BattleSystem : MonoBehaviour
         int damage = attacker.GetComponent<Unit>().baseSetup.Attack * attacker.GetComponent<Unit>().weapon.strength / victim.GetComponent<Unit>().baseSetup.Defense;
         damage = Mathf.FloorToInt(damage * Random.Range(0.90f, 1.10f));
         print(damage);
+        Instantiate(hitParticle, victim.transform.position, Quaternion.identity);
         victim.GetComponent<Unit>().baseSetup.HP -= damage;
         if (victim.GetComponent<Unit>().baseSetup.HP < 0)
         {
@@ -210,6 +214,8 @@ public class BattleSystem : MonoBehaviour
 
         // Set the target position
         Vector3 targetPosition = new Vector3(1f, 0f);
+        
+        selectedCharacter.GetComponent<Animator>().SetBool("DoRun", true);
 
         // Interpolate the position over time for forward movement
         float elapsedTime = 0f;
@@ -222,6 +228,11 @@ public class BattleSystem : MonoBehaviour
 
         // Ensure the character reaches the exact target position for forward movement
         selectedCharacter.transform.position = targetPosition;
+
+        if (selectedCharacter.transform.position == targetPosition)
+        {
+            selectedCharacter.GetComponent<Animator>().SetBool("DoRun", false);
+        }
     }
     
     private IEnumerator MoveCharacterBack(GameObject currentCharacter)
@@ -231,6 +242,8 @@ public class BattleSystem : MonoBehaviour
 
         // Set the initial position
         Vector3 initialPosition = currentCharacter.transform.position;
+        
+        currentCharacter.GetComponent<Animator>().SetBool("DoRun", true);
 
         // Interpolate the position over time for backward movement
         float elapsedTime = 0f;
@@ -243,6 +256,11 @@ public class BattleSystem : MonoBehaviour
 
         // Ensure the character reaches the exact target position for backward movement
         currentCharacter.transform.position = targetPosition;
+        if (currentCharacter.transform.position == targetPosition)
+        {
+            currentCharacter.GetComponent<Animator>().SetBool("DoRun", false);
+        }
+        
     }
 
     private void PlayerTurn(GameObject selectedCharacter)
@@ -260,10 +278,11 @@ public class BattleSystem : MonoBehaviour
         var element = turnOrder[Random.Range(0, turnOrder.Count)];
         if (element.GetComponent<Unit>().baseSetup.isEnemy == false && element.GetComponent<Unit>().baseSetup.isDead == false)
         {
+            yield return new WaitForSeconds(1f);
             DamageCalculation(turnOrder[turnIndex], element);
+            yield return new WaitForSeconds(1f);
             turnIndex++;
             Turn();
-            yield return new WaitForSeconds(2f);
         }
         else
         {

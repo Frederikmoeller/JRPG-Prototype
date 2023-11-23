@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 553cbc83be253174da0d64ddc43819f1
+guid: bf9cdbc25e8b17d4d94743de11d5224f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -70,7 +70,7 @@ TextureImporter:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
-    resizeAlgorithm: 1
+    resizeAlgorithm: 0
     textureFormat: 4
     textureCompression: 0
     compressionQuality: 50
@@ -123,12 +123,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: regSprite_0
+      name: regSpriteRunning_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 3
-        width: 22
+        x: 6
+        y: 35
+        width: 20
         height: 28
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 563f06e73ad87784a9b8d4d027e21c4a
-      internalID: -188485902
+      spriteID: 26c55447b9a7c104ba8e51d1c10089ac
+      internalID: -384587246
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: regSprite_1
+      name: regSpriteRunning_1
       rect:
         serializedVersion: 2
-        x: 37
-        y: 3
-        width: 22
-        height: 28
+        x: 36
+        y: 35
+        width: 24
+        height: 26
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,8 +158,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b9f56a0f89f9554449ac3c49340f06cb
-      internalID: 146884864
+      spriteID: 4c1aaa199d69172498ac248c1c9427f3
+      internalID: 1586890113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: regSpriteRunning_2
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3
+        width: 22
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1980df46a35d72a44a3069638adc6932
+      internalID: -623382725
       vertices: []
       indices: 
       edges: []
@@ -175,8 +196,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      regSprite_0: -188485902
-      regSprite_1: 146884864
+      regSpriteRunning_0: -384587246
+      regSpriteRunning_1: 1586890113
+      regSpriteRunning_2: -623382725
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
