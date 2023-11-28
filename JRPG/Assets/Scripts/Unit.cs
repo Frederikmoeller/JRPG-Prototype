@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 
 public class Unit : MonoBehaviour
 {
+    //These are setup to make different characters
     public BaseUnit baseSetup;
     public PlayerUnit playerSetup;
     public EnemyUnit enemySetup;
@@ -18,6 +19,6 @@ public class Unit : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _spriteRenderer.sprite = baseSetup.sprite;
+        _spriteRenderer.sprite = baseSetup.sprite; //sets the sprite based on the baseSetup (not really used when animator is used)
     }
 }

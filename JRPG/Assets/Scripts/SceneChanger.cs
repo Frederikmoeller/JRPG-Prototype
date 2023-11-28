@@ -17,7 +17,7 @@ public class SceneChanger : MonoBehaviour
     {
         
     }
-
+    //Changes the scene if the player runs into an enemy
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Enemy"))

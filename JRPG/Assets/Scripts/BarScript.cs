@@ -11,12 +11,12 @@ public class BarScript : MonoBehaviour
 
     private void Start()
     {
-        Bar = GetComponent<Slider>();
+        Bar = GetComponent<Slider>(); //Gets the slider component of the object
     }
 
     private void Update()
     {
-
+        //Checks if the name of the object contains a certain string and sets the bar value and maxvalue to the appropriate stats
         if (gameObject.name.Contains("Health"))
         {
             Bar.maxValue = playerStats.baseSetup.MaxHP;

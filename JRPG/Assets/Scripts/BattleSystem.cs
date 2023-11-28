@@ -11,6 +11,7 @@ using Random = UnityEngine.Random;
 
 public class BattleSystem : MonoBehaviour
 {
+    //Different states the combat can be in
     public enum BattleState
     {
         Start,
@@ -35,12 +36,12 @@ public class BattleSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _characterAnimator = GetComponent<Animator>();
-        SpawnCharacters();
-        turnOrder.Sort(CompareSpeed);
-        StartCoroutine(SetupBattle());
+        _characterAnimator = GetComponent<Animator>(); //Gets the animator
+        SpawnCharacters(); //Spawns characters
+        turnOrder.Sort(CompareSpeed); //Sorts the turnOrder list based on the speed of the characters
+        StartCoroutine(SetupBattle()); //Runs setup battle
     }
-
+    //This function makes sure everything that needs to be reset is reset and starts the first turn
     IEnumerator SetupBattle()
     {
         turnIndex = 0;
@@ -49,7 +50,7 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(2f);
         Turn();
     }
-
+    //This function handles what happens if it is an enemy turn or a player turn and also makes sure that the turns loop
     public void Turn()
     {
         if (turnIndex > turnOrder.Count - 1)
@@ -73,19 +74,20 @@ public class BattleSystem : MonoBehaviour
         }
 
     }
-
+    //chooses an enemy (Never got around to making the player choose themselves)
     private GameObject ChooseEnemy()
     {
         GameObject chosenEnemy = GameObject.Find("Slime");
         
         return chosenEnemy;
     }
-
+    //Basically just runs the damage calculation of the player and the enemy.
+    //The method is used by a button.
     public void PlayerAttack()
     {
         DamageCalculation(turnOrder[turnIndex], ChooseEnemy());
     }
-
+    //Handles what happens at the end of the turn. This includes moving all the UI and character positions back
     public IEnumerator EndOfTurn()
     {
         turnOrder[turnIndex].transform.GetChild(0).gameObject.SetActive(false);
@@ -97,7 +99,7 @@ public class BattleSystem : MonoBehaviour
         turnIndex++;
         Turn();
     }
-
+    //Instantiates all player characters and their UI and also spawns the enemies and adds them to the turnOrder list.
     void SpawnCharacters()
     {
         for (int i = 0; i < charactersToSpawn.Count; i++)
@@ -144,7 +146,7 @@ public class BattleSystem : MonoBehaviour
         }
 
     }
-
+    //This method compares the speed between characters and is used when sorting the turnOrder.
     private int CompareSpeed(GameObject a, GameObject b)
     {
         int a_speed = a.GetComponent<Unit>().baseSetup.Speed;
@@ -152,15 +154,18 @@ public class BattleSystem : MonoBehaviour
 
         if (a_speed > b_speed)
         {
-            return -1;
+            return -1; //Returns -1 to show the sort function that the two gameobjects should change places.
         }
         if (a_speed < b_speed)
         {
             return 1;
         }
-        return 0;
+        return 0; //Failsafe if the speeds are the same.
     }
-
+    //This method does all the damage calculations and also spawns particles.
+    //It also checks if the HP of the target is <0 and sets the HP to 0 if it is.
+    //Lastly it also checks if players are dead and enemies are dead and adds to a tally.
+    //If that tally is the same or more than the count of the list of player characters or enemies then it should close boot you to the overworld.
     private void DamageCalculation(GameObject attacker, GameObject victim)
     {
         print("Attacker is " + attacker + " and victim is " + victim);
@@ -205,8 +210,8 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    private float lerpTime = 0.1f; // Adjust the time as needed
-
+    private float lerpTime = 0.1f; // Adjusts how fast the player moves to the middle
+    //Moves characters to the middle of the screen to indicate it's turn
     private IEnumerator MoveCharacter(GameObject selectedCharacter)
     {
         // Store the initial position of the character
@@ -215,26 +220,27 @@ public class BattleSystem : MonoBehaviour
         // Set the target position
         Vector3 targetPosition = new Vector3(1f, 0f);
         
-        selectedCharacter.GetComponent<Animator>().SetBool("DoRun", true);
+        selectedCharacter.GetComponent<Animator>().SetBool("DoRun", true); //Plays the running animation
 
         // Interpolate the position over time for forward movement
         float elapsedTime = 0f;
-        while (elapsedTime < lerpTime)
+        while (elapsedTime < lerpTime) //While loop used since this isn't run in update
         {
-            selectedCharacter.transform.position = Vector3.Lerp(initialPosition, targetPosition, elapsedTime / lerpTime);
+            //Lerp(Linear interpolation) used to smooth movement from a to b
+            selectedCharacter.transform.position = Vector3.Lerp(initialPosition, targetPosition, elapsedTime / lerpTime); 
             elapsedTime += Time.deltaTime;
             yield return null; // Wait for the next frame
         }
 
-        // Ensure the character reaches the exact target position for forward movement
+        // Ensures the character reaches the exact target position
         selectedCharacter.transform.position = targetPosition;
 
         if (selectedCharacter.transform.position == targetPosition)
         {
-            selectedCharacter.GetComponent<Animator>().SetBool("DoRun", false);
+            selectedCharacter.GetComponent<Animator>().SetBool("DoRun", false); //Stops the running animation and plays idle animation
         }
     }
-    
+    //Does the same as MoveCharacter but just backwards
     private IEnumerator MoveCharacterBack(GameObject currentCharacter)
     {
         // Store the target position
@@ -262,7 +268,7 @@ public class BattleSystem : MonoBehaviour
         }
         
     }
-
+    //If the turn is a player turn this function will move the character to the center and the UI will be shifted left to indicate who it is
     private void PlayerTurn(GameObject selectedCharacter)
     {
         StartCoroutine(MoveCharacter(selectedCharacter));
@@ -271,12 +277,12 @@ public class BattleSystem : MonoBehaviour
         GameObject.Find(selectedCharacter.name + "UI").transform.position = UIposition;
         selectedCharacter.transform.GetChild(0).gameObject.SetActive(true);
     }
-
+    //If the turn is a enemy turn it will choose a random gameobject and check if it is a player.
     private IEnumerator EnemyTurn()
     {
         state = BattleState.Enemyturn;
         var element = turnOrder[Random.Range(0, turnOrder.Count)];
-        if (element.GetComponent<Unit>().baseSetup.isEnemy == false && element.GetComponent<Unit>().baseSetup.isDead == false)
+        if (element.GetComponent<Unit>().baseSetup.isEnemy == false && element.GetComponent<Unit>().baseSetup.isDead == false) //If it was a player run damage calculation turn
         {
             yield return new WaitForSeconds(1f);
             DamageCalculation(turnOrder[turnIndex], element);
@@ -284,12 +290,12 @@ public class BattleSystem : MonoBehaviour
             turnIndex++;
             Turn();
         }
-        else
+        else //If it wasn't a player then run this function again
         {
             StartCoroutine(EnemyTurn());
         }
     }
-
+    //This method gets the speed difference when the player tries to escape
     public int SpeedDifferenceCalculation()
     {
         int enemySpeed = 0;
@@ -307,7 +313,7 @@ public class BattleSystem : MonoBehaviour
         int speedDifference = turnOrder[turnIndex].GetComponent<Unit>().baseSetup.Speed - enemySpeed;
         return speedDifference;
     }
-
+    //Waitfunction made to run when function can't be an IEnmuerator but still needs to wait.
     public IEnumerator WaitFunction(float seconds)
     {
         yield return new WaitForSeconds(seconds);

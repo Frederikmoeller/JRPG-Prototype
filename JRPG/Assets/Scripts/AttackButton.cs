@@ -13,19 +13,19 @@ public class AttackButton : MonoBehaviour
     private void Awake()
     {
         print("Awake");
-        _battleSystem = GameObject.Find("Battlesystem").GetComponent<BattleSystem>();
+        _battleSystem = GameObject.Find("Battlesystem").GetComponent<BattleSystem>(); //Get the battle system script to use methods from it
     }
 
     public void OnAttackButton()
     {
         print("Attack!");
-        _battleSystem.PlayerAttack();
+        _battleSystem.PlayerAttack(); //When button is pressed do the player attack method
     }
     
-    public void OnFleeButton()
+    public void OnFleeButton() //This method checks if the player can flee or not
     {
         speedDifference = _battleSystem.SpeedDifferenceCalculation();
-        int fleeValue = Random.Range(0, 100 + speedDifference);
+        int fleeValue = Random.Range(0, 100 + speedDifference); // Gets a random value between 0 and 100 + the speed difference of the fastest enemy and the player
         print(fleeValue);
         if (fleeValue < 50)
         {
